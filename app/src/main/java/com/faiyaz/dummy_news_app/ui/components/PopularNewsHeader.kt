@@ -20,7 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PopularNewsHeader() {
+fun NewsHeader(
+    headerName:String = "Popular News"
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +31,7 @@ fun PopularNewsHeader() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Popular News",
+            text = headerName,
             style = MaterialTheme.typography.titleMedium,
             color = Color.DarkGray
         )
@@ -55,5 +57,5 @@ fun PopularNewsHeader() {
 @Preview
 @Composable
 fun PopularNewsHeaderPreview(){
-    PopularNewsHeader()
+    NewsHeader()
 }
