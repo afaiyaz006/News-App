@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
@@ -25,7 +27,9 @@ import io.ktor.http.headers
 
 @Composable
 fun NewsUI(){
-    Column(modifier = Modifier.fillMaxHeight()){
+    Column(
+        modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())
+    ){
         NewsHeader()
         NewsTopicSelector()
         NewsGallery()
@@ -43,7 +47,7 @@ fun NewsGallery(){
 }
 @Composable
 fun NewsGalleryFeatured(){
-    LazyColumn {
+    LazyRow(modifier=Modifier.fillMaxHeight()) {
         items(10){
             NewsCard()
         }
