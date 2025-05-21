@@ -26,21 +26,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
+import com.faiyaz.dummy_news_app.ui.navigation.NewsAppNavGraph
+import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
 import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
 @Preview
 @Composable
 fun NewsApp(){
+    val navController = rememberNavController()
+
     NewsAppTheme {
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            bottomBar = {BottomNavigation()},
+            bottomBar = {
+
+                BottomNavigation(
+                    onHomeButtonPressed = {navController.navigate(NewsAppRoute.HOME.route)},
+                    onSearchButtonPressed ={navController.navigate(NewsAppRoute.SEARCH.route)},
+                    onFavouriteButtonPressed = {navController.navigate(NewsAppRoute.Favourite.route)}
+                )
+
+                        },
             topBar = {TopNavigation()}
         ) { innerPadding ->
             Surface(modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)) {
-                NewsScreen()
+                NewsAppNavGraph(navController = navController)
             }
         }
     }
@@ -52,7 +66,11 @@ fun NewsScreen(modifier: Modifier=Modifier){
 }
 
 @Composable
-fun BottomNavigation() {
+fun BottomNavigation(
+    onHomeButtonPressed:() -> Unit={},
+    onSearchButtonPressed:()->Unit={},
+    onFavouriteButtonPressed:()->Unit={}
+) {
     BottomAppBar(
         actions = {
             Row(
@@ -64,7 +82,7 @@ fun BottomNavigation() {
             ) {
                 IconButton(
 
-                    onClick = { /* do something */ }
+                    onClick = onHomeButtonPressed
                 ) {
                     Icon(
                         Icons.Outlined.Home,
@@ -74,7 +92,7 @@ fun BottomNavigation() {
                     )
                 }
                 IconButton(
-                    onClick = { /* do something */ }
+                    onClick = onSearchButtonPressed
                 ) {
                     Icon(
                         Icons.Outlined.Search,
@@ -84,7 +102,7 @@ fun BottomNavigation() {
                 }
                 IconButton(
 
-                    onClick = { /* do something */ }
+                    onClick = onFavouriteButtonPressed
                 ) {
                     Icon(
                         Icons.Outlined.Favorite,
