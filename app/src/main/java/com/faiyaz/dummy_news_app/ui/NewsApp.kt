@@ -1,5 +1,6 @@
 package com.faiyaz.dummy_news_app.ui
 
+import NewsUIViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,9 +32,11 @@ import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppNavGraph
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
 import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
-@Preview
+
 @Composable
-fun NewsApp(){
+fun NewsApp(
+    newsUiViewModel: NewsUIViewModel
+){
     val navController = rememberNavController()
 
     NewsAppTheme {
@@ -46,23 +49,20 @@ fun NewsApp(){
                     onHomeButtonPressed = {navController.navigate(NewsAppRoute.HOME.route)},
                     onSearchButtonPressed ={navController.navigate(NewsAppRoute.SEARCH.route)},
                     onFavouriteButtonPressed = {navController.navigate(NewsAppRoute.Favourite.route)}
-                )
-
-                        },
+                ) },
             topBar = {TopNavigation()}
         ) { innerPadding ->
             Surface(modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)) {
-                NewsAppNavGraph(navController = navController)
+                NewsAppNavGraph(
+                    navController = navController,
+                    newsUiViewModel=newsUiViewModel
+                )
             }
         }
     }
 
-}
-@Composable
-fun NewsScreen(modifier: Modifier=Modifier){
-    NewsUI()
 }
 
 @Composable

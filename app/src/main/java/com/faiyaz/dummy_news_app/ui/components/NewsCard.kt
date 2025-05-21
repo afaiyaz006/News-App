@@ -26,10 +26,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material3.Icon
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import coil3.compose.AsyncImage
 import com.faiyaz.dummy_news_app.R
 @Composable
-fun NewsCard() {
+fun NewsCard(
+    title: String ="demo",
+    description:String="demo",
+    imageUrl:String="demo"
+) {
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -38,12 +44,11 @@ fun NewsCard() {
             .fillMaxWidth()
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background), // Replace with actual image resource
-                contentDescription = "Mark Carney",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
+            AsyncImage(
+                model = imageUrl, // Replace with actual image resource
+                contentDescription = description,
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxWidth()
                     .height(200.dp)
             )
 
@@ -51,10 +56,13 @@ fun NewsCard() {
 
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Text(
-                    text = "Mark Carney: The veteran banker facing the US trade storm",
+                    text =title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
-                    lineHeight = 22.sp
+                    overflow = TextOverflow.Clip,
+                    lineHeight = 22.sp,
+                    maxLines = 1,
+                    modifier=Modifier.width(300.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
