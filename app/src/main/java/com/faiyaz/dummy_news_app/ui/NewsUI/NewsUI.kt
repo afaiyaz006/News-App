@@ -42,7 +42,8 @@ fun NewsUI(
 //    navController: NavController
     onNewsCardTap: ()->Unit={},
     onViewAllClick: ()->Unit={},
-    onFeaturedNewsClick:()->Unit={}
+    onFeaturedNewsClick:()->Unit={},
+    onLikeButtonClicked:(News)->Unit={}
 ) {
     val newsViewState by newsUiViewModel.uiState.collectAsStateWithLifecycle()
     val topNews = newsViewState.topNews
@@ -79,6 +80,9 @@ fun NewsUI(
             onNewsCardTap = { news ->
                 newsUiViewModel.selectNews(news)
                 onNewsCardTap()
+            },
+            onLikeButtonClicked={
+                news->onLikeButtonClicked(news)
             }
         )
 
@@ -91,14 +95,19 @@ fun NewsUI(
 }
 
 @Composable
-fun NewsGallery(categoryNews: List<News>, onNewsCardTap: (News) -> Unit) {
+fun NewsGallery(categoryNews: List<News>, 
+                onNewsCardTap: (News) -> Unit,
+                onLikeButtonClicked: (News) -> Unit) {
     LazyRow {
         items(categoryNews) { news ->
             NewsCard(
                 title = news.title,
                 description = news.description,
                 imageUrl = news.imageUrl,
-                onNewsCardTap = { onNewsCardTap(news) }
+                dateString = news.publishedAt,
+                isLiked = news.liked,
+                onNewsCardTap = { onNewsCardTap(news) },
+                onLikeButtonTap ={ onLikeButtonClicked(news)}
             )
         }
     }
@@ -112,6 +121,8 @@ fun NewsGalleryFeatured(topNews:List<News>,
                 title = news.title,
                 description = news.description,
                 imageUrl = news.imageUrl,
+                dateString = news.publishedAt,
+                isLiked = news.liked,
                 onNewsCardTap = { onNewsCardTap(news)}
             )
         }

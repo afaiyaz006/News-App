@@ -30,5 +30,8 @@ data class News(
     val publishedAt: String,
 
     @ColumnInfo(name="category")
-    val category:String
+    val category:String,
+
+    @ColumnInfo(name="isLiked")
+    val liked: Boolean=false
 )

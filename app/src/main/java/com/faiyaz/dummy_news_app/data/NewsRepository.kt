@@ -32,4 +32,13 @@ class NewsRepository(
         }
         return results
     }
+    suspend fun likeNews(news:News){
+        newsLocalDatabase.likeNewsByUuid(news.uuid)
+    }
+    suspend fun unLikeNews(news:News){
+        newsLocalDatabase.unlikeNewsByUuid(news.uuid)
+    }
+    suspend fun getLikedNews():List<News>?{
+        return newsLocalDatabase.getLikedNews()
+    }
 }

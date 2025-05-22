@@ -51,6 +51,7 @@ fun NewsList(
                 title = news.title,
                 description = news.description,
                 imageUrl = news.imageUrl,
+                dateString = news.publishedAt,
                 onNewsCardTap = {onItemTapped(news)}
             )
         }

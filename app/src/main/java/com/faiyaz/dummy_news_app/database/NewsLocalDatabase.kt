@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.faiyaz.dummy_news_app.data.News
 
-@Database(entities = [News::class], version = 2)
+@Database(entities = [News::class], version = 3)
 abstract class NewsLocalDatabase : RoomDatabase() {
     abstract fun newsDao(): NewsDAO
 }

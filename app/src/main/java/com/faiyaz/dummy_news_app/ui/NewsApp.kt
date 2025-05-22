@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppNavGraph
@@ -46,14 +47,20 @@ import kotlinx.coroutines.launch
 @Composable
 fun NewsApp(
     newsUiViewModel: NewsUIViewModel,
-    newsSearchViewModel: NewsSearchViewModel
+    newsSearchViewModel: NewsSearchViewModel,
+    newsFavViewModel: FavouriteNewsViewModel
 ){
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
-    val canNavigateBack = currentRoute != NewsAppRoute.HOME.route
+    val canNavigateBack = when(currentRoute){
+            NewsAppRoute.Settings.route -> true
+            NewsAppRoute.Details.route -> true
+            else -> false
+    }
+
     NewsAppTheme {
         ModalNavigationDrawer(
             drawerState = drawerState,
@@ -101,7 +108,8 @@ fun NewsApp(
                     NewsAppNavGraph(
                         navController = navController,
                         newsUiViewModel = newsUiViewModel,
-                        newsSearchViewModel = newsSearchViewModel
+                        newsSearchViewModel = newsSearchViewModel,
+                        newsFavViewModel =newsFavViewModel
                     )
                 }
             }

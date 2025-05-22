@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Card
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -35,8 +36,15 @@ fun NewsCard(
     title: String ="demo",
     description:String="demo",
     imageUrl:String="demo",
-    onNewsCardTap:()->Unit={}
+    dateString:String ="23 May 2025",
+    onNewsCardTap:()->Unit={},
+    onLikeButtonTap:()->Unit={},
+    isLiked:Boolean=false
 ) {
+    val likeColor = when(isLiked){
+        false -> Color.Gray
+        true -> Color.Red
+    }
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -92,24 +100,24 @@ fun NewsCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "3 days ago",
+                        text = dateString,
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.Gray
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Star, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Star, contentDescription = null, tint =likeColor, modifier = Modifier.size(32.dp).clickable(onClick = onLikeButtonTap))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("123.1K", style = MaterialTheme.typography.labelSmall)
+//                        Text("123.1K", style = MaterialTheme.typography.labelSmall)
+//
+//                        Spacer(modifier = Modifier.width(12.dp))
+//
+//                        Icon(Icons.Default.Person, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+//                        Spacer(modifier = Modifier.width(4.dp))
+//                        Text("567K", style = MaterialTheme.typography.labelSmall)
+//
+//                        Spacer(modifier = Modifier.width(12.dp))
 
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Icon(Icons.Default.Person, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("567K", style = MaterialTheme.typography.labelSmall)
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Icon(Icons.Default.Share, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Share, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(32.dp))
                     }
                 }
 

@@ -8,6 +8,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.Favourites.FavouritesUI
 import com.faiyaz.dummy_news_app.ui.NewsApp
 import com.faiyaz.dummy_news_app.ui.NewsDetails.NewsDetailUI
@@ -30,7 +31,8 @@ enum class NewsAppRoute(val route: String) {
 fun NewsAppNavGraph(
     navController: NavHostController,
     newsUiViewModel: NewsUIViewModel,
-    newsSearchViewModel: NewsSearchViewModel
+    newsSearchViewModel: NewsSearchViewModel,
+    newsFavViewModel: FavouriteNewsViewModel
 ) {
     NavHost(navController = navController, startDestination = NewsAppRoute.HOME.route) {
 
@@ -45,6 +47,9 @@ fun NewsAppNavGraph(
                 },
                 onFeaturedNewsClick = {
                     navController.navigate(NewsAppRoute.FeaturedNews.route)
+                },
+                onLikeButtonClicked = {
+                    news -> newsFavViewModel.togglelikeNews(news)
                 }
 
             )
@@ -59,7 +64,7 @@ fun NewsAppNavGraph(
             )
         }
         composable(NewsAppRoute.Favourite.route) {
-            FavouritesUI()
+            FavouritesUI(newsFavViewModel.getFavouriteNews())
         }
         composable(NewsAppRoute.Details.route){
             NewsDetailUI(newsUiViewModel)
