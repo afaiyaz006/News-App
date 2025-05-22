@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
@@ -49,6 +51,9 @@ fun NewsApp(
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val navBackStackEntry = navController.currentBackStackEntryAsState().value
+    val currentRoute = navBackStackEntry?.destination?.route
+    val canNavigateBack = currentRoute != NewsAppRoute.HOME.route
     NewsAppTheme {
         ModalNavigationDrawer(
             drawerState = drawerState,
@@ -75,11 +80,17 @@ fun NewsApp(
                     )
                 },
                 topBar = {
-                    TopNavigation(onMenuClick ={
-                        scope.launch {
-                            drawerState.open()
-                        }
-                    })
+                    TopNavigation(
+                        onMenuClick = {
+                            scope.launch {
+                                drawerState.open()
+                            }
+                        },
+                        canNavigateBack = canNavigateBack,
+                        onBackClick ={
+                            navController.navigate(NewsAppRoute.HOME.route)
+                        },
+                    )
                 }
             ) { innerPadding ->
                 Surface(
@@ -173,18 +184,30 @@ fun BottomNavigation(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigation(
+    canNavigateBack:Boolean=false,
+    onBackClick: ()->Unit,
     onMenuClick:()->Unit
 ){
     CenterAlignedTopAppBar(
         title = {
             Text("Dummy News App", maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
+
         navigationIcon = {
-            IconButton(onClick =onMenuClick) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Localized description"
-                )
+            if (canNavigateBack) {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.Outlined.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            } else {
+                IconButton(onClick = onMenuClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Menu"
+                    )
+                }
             }
         },
         actions = {
