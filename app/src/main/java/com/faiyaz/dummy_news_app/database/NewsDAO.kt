@@ -7,9 +7,19 @@ import com.faiyaz.dummy_news_app.data.News
 
 @Dao
 interface NewsDAO{
-    @Query("Select * FROM news WHERE category==(:category)")
-    fun getAll(category:String): List<News>
+    @Query("Select * FROM news WHERE category==:category")
+    suspend fun getAll(category:String): List<News>
 
     @Insert
-    fun insertAll(news: List<News>)
+    suspend fun insertAll(news: List<News>)
+
+    @Query("""
+    SELECT * FROM news 
+    WHERE 
+    title LIKE '%' || :query || '%' OR 
+    content LIKE '%' || :query || '%' OR 
+    author LIKE '%' || :query || '%' OR 
+    description LIKE '%' || :query || '%'
+""")
+    suspend fun searchNews(query: String): List<News>
 }

@@ -83,7 +83,10 @@ fun NewsUI(
         )
 
         NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)
-        NewsGalleryFeatured(topNews)
+        NewsGalleryFeatured(topNews) { news ->
+            newsUiViewModel.selectNews(news)
+            onNewsCardTap()
+        }
     }
 }
 
@@ -101,13 +104,15 @@ fun NewsGallery(categoryNews: List<News>, onNewsCardTap: (News) -> Unit) {
     }
 }
 @Composable
-fun NewsGalleryFeatured(topNews:List<News>){
+fun NewsGalleryFeatured(topNews:List<News>,
+                        onNewsCardTap: (News) -> Unit){
     LazyRow(modifier=Modifier.fillMaxHeight()) {
         items(topNews){
             news -> NewsCard(
                 title = news.title,
                 description = news.description,
-                imageUrl = news.imageUrl
+                imageUrl = news.imageUrl,
+                onNewsCardTap = { onNewsCardTap(news)}
             )
         }
     }

@@ -13,7 +13,8 @@ class AppContainer(context: Context) {
     private val networkModule = NetworkModule()
     private val httpClient: HttpClient = networkModule.httpClient
     private val newsApiClient = NewsApiClient(httpClient)
-    private val roomDB= Room.databaseBuilder(context, NewsLocalDatabase::class.java,"News-Database-v1").build()
+
+    private val roomDB: NewsLocalDatabase= Room.databaseBuilder(context.applicationContext, NewsLocalDatabase::class.java,"News-Database-v1").fallbackToDestructiveMigration(true).build()
     private val newsLocalDatabase = roomDB.newsDao()
     val newsRepository = NewsRepository(newsApiClient,newsLocalDatabase)
 

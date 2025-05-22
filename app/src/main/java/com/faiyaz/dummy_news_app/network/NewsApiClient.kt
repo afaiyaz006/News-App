@@ -10,6 +10,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import java.util.Locale
 
 class NewsApiClient(
     private val httpClient: HttpClient
@@ -31,7 +32,7 @@ class NewsApiClient(
                 url=it.jsonObject["url"]?.jsonPrimitive?.contentOrNull.toString(),
                 imageUrl = it.jsonObject["urlToImage"]?.jsonPrimitive?.contentOrNull.toString(),
                 publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull.toString(),
-                category= topic
+                category= topic.toString().lowercase()
 
             )
 
@@ -41,19 +42,31 @@ class NewsApiClient(
     }
 
     suspend fun getCategoricalNews(topic:String):List<News>?{
-        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey"
-        val newsList =getNewsData(endpoint,topic)
-        return newsList
+        try {
+            val endpoint =
+                "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey"
+            val newsList = getNewsData(endpoint, topic)
+            return newsList
+        }catch(e: Exception){
+            return emptyList()
+        }
     }
     suspend fun getTopNews():List<News>?{
-
-        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey"
-        return getNewsData(endpoint)
-
+        try {
+            val endpoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey"
+            return getNewsData(endpoint)
+        }catch(e: Exception){
+            return emptyList()
+        }
     }
 
     suspend fun searchNews(queryString:String):List<News>?{
-        val endpoint = "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey=$apiKey"
-        return getNewsData(endpoint,"searched")
+        try {
+            val endpoint =
+                "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey=$apiKey"
+            return getNewsData(endpoint, "searched")
+        }catch (e: Exception){
+            return emptyList()
+        }
     }
 }

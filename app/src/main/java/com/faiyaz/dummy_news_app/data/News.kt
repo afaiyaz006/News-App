@@ -9,26 +9,26 @@ data class News(
     @PrimaryKey val uuid: String=UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "author")
-    val author: String? = null,
+    val author: String,
 
     @ColumnInfo(name = "title")
-    val title: String? = null,
+    val title: String,
 
     @ColumnInfo(name = "description")
-    val description: String? = null,
+    val description: String,
 
     @ColumnInfo(name = "content")
-    val content: String? = null,
+    val content: String,
 
     @ColumnInfo(name = "url")
-    val url: String? = null,
+    val url: String,
 
     @ColumnInfo(name = "image_url")
-    val imageUrl: String? = null,
+    val imageUrl: String,
 
     @ColumnInfo(name = "published_at")
-    val publishedAt: String? = null,
+    val publishedAt: String,
 
     @ColumnInfo(name="category")
-    val category:String? = null
+    val category:String
 )
