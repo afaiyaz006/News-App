@@ -14,7 +14,7 @@ import kotlinx.serialization.json.jsonPrimitive
 class NewsApiClient(
     private val httpClient: HttpClient
 ){
-
+    private val apiKey =""
     suspend fun getNewsData(endpoint:String):List<News>?{
         var response = httpClient.get(endpoint)
         var responseString = response.bodyAsText()
@@ -40,19 +40,19 @@ class NewsApiClient(
     }
 
     suspend fun getCategoricalNews(topic:String):List<News>?{
-        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey="
+        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey"
         val newsList =getNewsData(endpoint)
         return newsList
     }
     suspend fun getTopNews():List<News>?{
 
-        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey="
+        val endpoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey"
         return getNewsData(endpoint)
 
     }
 
     suspend fun searchNews(queryString:String):List<News>?{
-        val endpoint = "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey="
+        val endpoint = "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey=$apiKey"
         return getNewsData(endpoint)
     }
 }

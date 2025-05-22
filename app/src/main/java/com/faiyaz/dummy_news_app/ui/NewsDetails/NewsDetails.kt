@@ -116,7 +116,7 @@ fun NewsDetailUI(
 
             // Description
             Text(
-                text= selectedNews?.content?: "",
+                text= selectedNews?.description?: "",
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 modifier = Modifier.fillMaxWidth()

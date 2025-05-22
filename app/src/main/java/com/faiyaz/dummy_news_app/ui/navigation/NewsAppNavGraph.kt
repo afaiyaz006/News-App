@@ -14,6 +14,7 @@ import com.faiyaz.dummy_news_app.ui.NewsDetails.NewsDetailUI
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchUI
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
+import com.faiyaz.dummy_news_app.ui.Settings.SettingsUI
 
 
 enum class NewsAppRoute(val route: String) {
@@ -22,7 +23,8 @@ enum class NewsAppRoute(val route: String) {
     Favourite("favourites"),
     Details("Details"),
     AllNews("All"),
-    FeaturedNews("FeaturedNews")
+    FeaturedNews("FeaturedNews"),
+    Settings("Settings")
 }
 @Composable
 fun NewsAppNavGraph(
@@ -48,10 +50,13 @@ fun NewsAppNavGraph(
             )
         }
         composable(NewsAppRoute.SEARCH.route) {
-            NewsSearchUI(newsSearchViewModel) {
-                news -> newsUiViewModel.selectNews(news)
-                navController.navigate(NewsAppRoute.Details.route)
-            }
+            NewsSearchUI(
+                newsSearchViewModel,
+                onSearchItemTapped = {
+                    news -> newsUiViewModel.selectNews(news)
+                    navController.navigate(NewsAppRoute.Details.route)
+                }
+            )
         }
         composable(NewsAppRoute.Favourite.route) {
             FavouritesUI()
@@ -78,6 +83,9 @@ fun NewsAppNavGraph(
                     navController.navigate(NewsAppRoute.Details.route)
                 }
             )
+        }
+        composable(NewsAppRoute.Settings.route){
+            SettingsUI()
         }
     }
 }
