@@ -15,7 +15,7 @@ class NewsApiClient(
     private val httpClient: HttpClient
 ){
     private val apiKey =""
-    suspend fun getNewsData(endpoint:String):List<News>?{
+    suspend fun getNewsData(endpoint:String,topic:String="top"):List<News>?{
         var response = httpClient.get(endpoint)
         var responseString = response.bodyAsText()
 
@@ -30,7 +30,8 @@ class NewsApiClient(
                 description = it.jsonObject["description"]?.jsonPrimitive?.contentOrNull.toString(),
                 url=it.jsonObject["url"]?.jsonPrimitive?.contentOrNull.toString(),
                 imageUrl = it.jsonObject["urlToImage"]?.jsonPrimitive?.contentOrNull.toString(),
-                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull.toString()
+                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull.toString(),
+                category= topic
 
             )
 
@@ -41,7 +42,7 @@ class NewsApiClient(
 
     suspend fun getCategoricalNews(topic:String):List<News>?{
         val endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey"
-        val newsList =getNewsData(endpoint)
+        val newsList =getNewsData(endpoint,topic)
         return newsList
     }
     suspend fun getTopNews():List<News>?{
@@ -53,6 +54,6 @@ class NewsApiClient(
 
     suspend fun searchNews(queryString:String):List<News>?{
         val endpoint = "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey=$apiKey"
-        return getNewsData(endpoint)
+        return getNewsData(endpoint,"searched")
     }
 }
