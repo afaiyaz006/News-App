@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppNavGraph
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
@@ -35,7 +36,8 @@ import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
 
 @Composable
 fun NewsApp(
-    newsUiViewModel: NewsUIViewModel
+    newsUiViewModel: NewsUIViewModel,
+    newsSearchViewModel: NewsSearchViewModel
 ){
     val navController = rememberNavController()
 
@@ -57,7 +59,8 @@ fun NewsApp(
                 .padding(innerPadding)) {
                 NewsAppNavGraph(
                     navController = navController,
-                    newsUiViewModel=newsUiViewModel
+                    newsUiViewModel=newsUiViewModel,
+                    newsSearchViewModel=newsSearchViewModel
                 )
             }
         }

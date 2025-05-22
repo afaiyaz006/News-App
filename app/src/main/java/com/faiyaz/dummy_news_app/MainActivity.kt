@@ -15,23 +15,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.faiyaz.dummy_news_app.di.AppContainer
 import com.faiyaz.dummy_news_app.ui.NewsApp
+import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 
 import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var newsUiViewModel: NewsUIViewModel
-
+    private lateinit var newsSearchUiViewModel: NewsSearchViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val appContainer = (application as NewsApplication).container
         newsUiViewModel = NewsUIViewModel(appContainer.newsRepository)
-
-
+        newsSearchUiViewModel = NewsSearchViewModel(appContainer.newsRepository)
         enableEdgeToEdge()
         setContent {
             NewsApp(
-                newsUiViewModel=newsUiViewModel
+                newsUiViewModel=newsUiViewModel,
+                newsSearchViewModel=newsSearchUiViewModel
             )
 
         }

@@ -14,4 +14,8 @@ class NewsRepository(
     suspend fun getTopNews(): List<News>? {
         return apiClient.getTopNews()
     }
+
+    suspend fun searchNews(query:String):List<News>?{
+        return apiClient.searchNews(query)
+    }
 }

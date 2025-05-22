@@ -34,14 +34,16 @@ import com.faiyaz.dummy_news_app.R
 fun NewsCard(
     title: String ="demo",
     description:String="demo",
-    imageUrl:String="demo"
+    imageUrl:String="demo",
+    onNewsCardTap:()->Unit={}
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        onClick = onNewsCardTap
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             AsyncImage(

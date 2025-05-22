@@ -1,5 +1,6 @@
 package com.faiyaz.dummy_news_app.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +22,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun NewsHeader(
-    headerName:String = "Popular News"
+    headerName:String = "Popular News",
+    onViewAllClick:()->Unit={}
 ) {
     Row(
         modifier = Modifier
@@ -36,8 +38,10 @@ fun NewsHeader(
             color = Color.DarkGray
         )
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.clickable(onClick = onViewAllClick)
         ) {
+
             Text(
                 text = "View All",
                 color = Color.Red,
@@ -49,6 +53,7 @@ fun NewsHeader(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = "Arrow",
                 tint = Color(0xFF2E7D32) // green
+
             )
         }
     }

@@ -15,6 +15,7 @@ data class NewsUiState(
     val topNews: List<News> = emptyList(),
     val categoryNews: List<News> = emptyList(),
     val selectedCategory: String = NewsCategory.BUSINESS.value,
+    val selectedNews: News? = null,
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )
@@ -104,6 +105,22 @@ class NewsUIViewModel(
                     )
                 }
             }
+        }
+    }
+    fun getCategory():String{
+        return uiState.value.selectedCategory
+    }
+    fun getCurrentCategoryNews():List<News>?{
+        return uiState.value.categoryNews
+    }
+    fun getCurrentTopNews():List<News>?{
+        return uiState.value.topNews
+    }
+    fun selectNews(news:News){
+        _uiState.update {
+            it.copy(
+                selectedNews = news
+            )
         }
     }
 }

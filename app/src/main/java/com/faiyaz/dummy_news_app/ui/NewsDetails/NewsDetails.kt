@@ -1,10 +1,14 @@
 package com.faiyaz.dummy_news_app.ui.NewsDetails
 
+import NewsUIViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -15,19 +19,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
 import com.faiyaz.dummy_news_app.R
 @Composable
-fun NewsDetailScreenComposable() {
-
+fun NewsDetailUI(
+    newsUIViewModel: NewsUIViewModel
+) {
+        val newsViewState by newsUIViewModel.uiState.collectAsStateWithLifecycle()
+        val selectedNews = newsViewState.selectedNews
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
             // News Image
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = "News Image",
+            AsyncImage(
+                model = selectedNews?.imageUrl,
+                contentDescription = selectedNews?.description,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -39,7 +48,7 @@ fun NewsDetailScreenComposable() {
 
             // Headline
             Text(
-                text = "Mark Carney: The veteran banker facing the US trade storm",
+                text = selectedNews?.title.toString(),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth()
@@ -49,7 +58,7 @@ fun NewsDetailScreenComposable() {
 
             // Category and Stats Row
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -107,7 +116,7 @@ fun NewsDetailScreenComposable() {
 
             // Description
             Text(
-                text = "OTTAWA – Amid escalating trade tensions between Canada and the United States, Mark Carney,\n\nCarney, known for his pivotal role in managing global economic crises, is now preparing to lead Canada through what appears to be the beginning of a fierce trade confrontation with the administration of US President Donald Trump.",
+                text= selectedNews?.content?: "",
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 modifier = Modifier.fillMaxWidth()
@@ -115,8 +124,8 @@ fun NewsDetailScreenComposable() {
         }
 
 }
-@Preview
-@Composable
-fun NewsDetailPreview(){
-    NewsDetailScreenComposable()
-}
+//@Preview
+//@Composable
+//fun NewsDetailPreview(){
+//    NewsDetailUI()
+//}

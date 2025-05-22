@@ -28,55 +28,75 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.faiyaz.dummy_news_app.data.utils.NewsCategory
+import com.faiyaz.dummy_news_app.ui.NewsApp
+import com.faiyaz.dummy_news_app.ui.NewsDetails.NewsDetailUI
 import com.faiyaz.dummy_news_app.ui.components.CategoryButton
 import com.faiyaz.dummy_news_app.ui.components.NewsTopicSelector
+import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
 
 @Composable
 fun NewsUI(
-    newsUiViewModel: NewsUIViewModel
-){
-
+    newsUiViewModel: NewsUIViewModel,
+//    navController: NavController
+    onNewsCardTap: ()->Unit={},
+    onViewAllClick: ()->Unit={},
+    onFeaturedNewsClick:()->Unit={}
+) {
     val newsViewState by newsUiViewModel.uiState.collectAsStateWithLifecycle()
     val topNews = newsViewState.topNews
     val categoryNews = newsViewState.categoryNews
-    Log.d("Data",topNews.toString())
+
+    Log.d("Data", topNews.toString())
+
     Column(
-        modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())
-    ){
-        NewsHeader()
+        modifier = Modifier
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
+    ) {
+        NewsHeader(onViewAllClick=onViewAllClick)
+
         val categories = NewsCategory.getAllValues()
 
         LazyRow(
-            modifier= Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(categories){
-                    category -> CategoryButton(
-                text = category.toString(),
-                selected =newsViewState.selectedCategory==category.toString(),
-                onClick = {
-
-                    newsUiViewModel.updateCategory(category.toString())
-                }
-            )
+            items(categories) { category ->
+                CategoryButton(
+                    text = category.toString(),
+                    selected = newsViewState.selectedCategory == category.toString(),
+                    onClick = {
+                        newsUiViewModel.updateCategory(category.toString())
+                    }
+                )
             }
         }
-        NewsGallery(categoryNews)
-        NewsHeader(headerName = "Featured")
+
+        NewsGallery(
+            categoryNews = categoryNews,
+            onNewsCardTap = { news ->
+                newsUiViewModel.selectNews(news)
+                onNewsCardTap()
+            }
+        )
+
+        NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)
         NewsGalleryFeatured(topNews)
     }
 }
-@Composable
-fun NewsGallery(categoryNews:List<News>){
-    LazyRow {
 
-        items(categoryNews){
-            news -> NewsCard(
-                        title =news.title,
-                        description = news.description,
-                        imageUrl = news.imageUrl
-                    )
+@Composable
+fun NewsGallery(categoryNews: List<News>, onNewsCardTap: (News) -> Unit) {
+    LazyRow {
+        items(categoryNews) { news ->
+            NewsCard(
+                title = news.title,
+                description = news.description,
+                imageUrl = news.imageUrl,
+                onNewsCardTap = { onNewsCardTap(news) }
+            )
         }
     }
 }
