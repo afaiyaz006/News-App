@@ -85,10 +85,14 @@ fun NewsUI(
         )
 
         NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)
-        NewsGalleryFeatured(topNews) { news ->
-            newsUiViewModel.selectNews(news)
-            onNewsCardTap()
-        }
+        NewsGalleryFeatured(
+            topNews,
+            onNewsCardTap={ news ->
+                newsUiViewModel.selectNews(news)
+                onNewsCardTap()
+            },
+            onLikeButtonClicked=onLikeButtonClicked
+        )
     }
 }
 
@@ -112,7 +116,8 @@ fun NewsGallery(categoryNews: List<News>,
 }
 @Composable
 fun NewsGalleryFeatured(topNews:List<News>,
-                        onNewsCardTap: (News) -> Unit){
+                        onNewsCardTap: (News) -> Unit,
+                        onLikeButtonClicked:(News)->Unit){
     LazyRow(modifier=Modifier.fillMaxHeight()) {
         items(topNews){
             news -> NewsCard(
@@ -121,7 +126,8 @@ fun NewsGalleryFeatured(topNews:List<News>,
                 imageUrl = news.imageUrl,
                 dateString = news.publishedAt,
                 isLiked = news.liked,
-                onNewsCardTap = { onNewsCardTap(news)}
+                onNewsCardTap = { onNewsCardTap(news)},
+                onLikeButtonTap = {onLikeButtonClicked(news)}
             )
         }
     }

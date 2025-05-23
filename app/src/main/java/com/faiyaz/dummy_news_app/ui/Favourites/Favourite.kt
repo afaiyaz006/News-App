@@ -14,15 +14,19 @@ import com.faiyaz.dummy_news_app.ui.components.SearchBar
 
 @Composable
 fun FavouritesUI(
-    favouriteNews:List<News>?
+    favouriteNews:List<News>?,
+    onLikeButtonClicked: (News)->Unit={}
 ){
     Column(modifier = Modifier.fillMaxHeight()){
-        NewsList(favouriteNews)
+        NewsList(
+            favNews=favouriteNews,
+            onLikeButtonClicked=onLikeButtonClicked
+        )
 
     }
 }
 @Composable
-fun NewsList(favNews:List<News>?=null){
+fun NewsList(favNews:List<News>?=null,onLikeButtonClicked: (News) -> Unit){
     LazyColumn {
         items(favNews?:emptyList()){
             news ->
@@ -31,7 +35,8 @@ fun NewsList(favNews:List<News>?=null){
                 description = news.description,
                 imageUrl = news.imageUrl,
                 dateString = news.publishedAt,
-                isLiked = news.liked
+                isLiked = news.liked,
+                onLikeButtonTap ={onLikeButtonClicked(news)}
             )
         }
     }

@@ -60,11 +60,19 @@ fun NewsAppNavGraph(
                 onSearchItemTapped = {
                     news -> newsUiViewModel.selectNews(news)
                     navController.navigate(NewsAppRoute.Details.route)
+                },
+                onLikeButtonClicked = {
+                        news -> newsFavViewModel.togglelikeNews(news)
                 }
             )
         }
         composable(NewsAppRoute.Favourite.route) {
-            FavouritesUI(newsFavViewModel.getFavouriteNews())
+            FavouritesUI(
+                newsFavViewModel.getFavouriteNews(),
+                onLikeButtonClicked = {
+                        news -> newsFavViewModel.togglelikeNews(news)
+                }
+            )
         }
         composable(NewsAppRoute.Details.route){
             NewsDetailUI(newsUiViewModel)
@@ -76,6 +84,9 @@ fun NewsAppNavGraph(
                 onNewsCardTap = {
                     news -> newsUiViewModel.selectNews(news)
                     navController.navigate(NewsAppRoute.Details.route)
+                },
+                onLikeButtonClicked = {
+                    news -> newsFavViewModel.togglelikeNews(news)
                 }
             )
         }
@@ -84,8 +95,11 @@ fun NewsAppNavGraph(
                 selectedTopic = "Featured",
                 newsList = newsUiViewModel.getCurrentTopNews(),
                 onNewsCardTap = {
-                        news -> newsUiViewModel.selectNews(news)
+                    news -> newsUiViewModel.selectNews(news)
                     navController.navigate(NewsAppRoute.Details.route)
+                },
+                onLikeButtonClicked = {
+                    news -> newsFavViewModel.togglelikeNews(news)
                 }
             )
         }

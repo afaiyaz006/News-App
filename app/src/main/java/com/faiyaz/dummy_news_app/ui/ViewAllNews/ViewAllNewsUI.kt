@@ -17,7 +17,9 @@ import com.faiyaz.dummy_news_app.ui.components.NewsCard
 fun ViewAllNewsUI(
     newsList:List<News>?,
     selectedTopic:String,
-    onNewsCardTap: (news:News)->Unit
+    onNewsCardTap: (news:News)->Unit={},
+    onLikeButtonClicked: (News)->Unit={}
+
 ){
     Column(modifier = Modifier.padding(16.dp)){
         Text(
@@ -30,7 +32,8 @@ fun ViewAllNewsUI(
                     title = news.title,
                     description = news.description,
                     imageUrl = news.imageUrl,
-                    onNewsCardTap={onNewsCardTap(news)}
+                    onNewsCardTap={onNewsCardTap(news)},
+                    onLikeButtonTap = {onLikeButtonClicked(news)}
                 )
             }
         }

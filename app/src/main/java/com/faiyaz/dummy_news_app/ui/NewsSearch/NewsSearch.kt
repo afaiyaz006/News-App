@@ -24,7 +24,8 @@ import com.faiyaz.dummy_news_app.ui.components.SearchBar
 @Composable
 fun NewsSearchUI(
     newsSearchViewModel: NewsSearchViewModel,
-    onSearchItemTapped: (news:News)->Unit={}
+    onSearchItemTapped: (news:News)->Unit={},
+    onLikeButtonClicked: (News)->Unit={}
 ){
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val newsSearchUIState by newsSearchViewModel.uiState.collectAsStateWithLifecycle()
@@ -36,14 +37,19 @@ fun NewsSearchUI(
             } ,
             onQueryChange = { newQuery -> searchQuery=newQuery}
         )
-        NewsList(newsSearchUIState.newsList,onItemTapped=onSearchItemTapped)
+        NewsList(
+            newsSearchUIState.newsList,
+            onItemTapped=onSearchItemTapped,
+            onLikeButtonClicked=onLikeButtonClicked
+        )
 
     }
 }
 @Composable
 fun NewsList(
     newsList:List<News>?,
-    onItemTapped:(news:News)->Unit={}
+    onItemTapped:(news:News)->Unit={},
+    onLikeButtonClicked:(News)->Unit={}
 ){
     LazyColumn {
         items(newsList?:emptyList()){
@@ -52,7 +58,8 @@ fun NewsList(
                 description = news.description,
                 imageUrl = news.imageUrl,
                 dateString = news.publishedAt,
-                onNewsCardTap = {onItemTapped(news)}
+                onNewsCardTap = {onItemTapped(news)},
+                onLikeButtonTap={onLikeButtonClicked(news)}
             )
         }
     }
