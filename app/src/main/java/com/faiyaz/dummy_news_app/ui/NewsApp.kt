@@ -2,6 +2,7 @@ package com.faiyaz.dummy_news_app.ui
 
 import NewsUIViewModel
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,6 +40,9 @@ import androidx.navigation.compose.rememberNavController
 import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
+import com.faiyaz.dummy_news_app.ui.Settings.AppSettings
+import com.faiyaz.dummy_news_app.ui.Settings.SettingsViewModel
+import com.faiyaz.dummy_news_app.ui.Settings.ThemeMode
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppNavGraph
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
 import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
@@ -48,7 +52,8 @@ import kotlinx.coroutines.launch
 fun NewsApp(
     newsUiViewModel: NewsUIViewModel,
     newsSearchViewModel: NewsSearchViewModel,
-    newsFavViewModel: FavouriteNewsViewModel
+    newsFavViewModel: FavouriteNewsViewModel,
+    settingsViewModel: SettingsViewModel
 ){
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
@@ -61,7 +66,11 @@ fun NewsApp(
             else -> false
     }
 
-    NewsAppTheme {
+    NewsAppTheme(
+        darkTheme = AppSettings.settingsState.mode==ThemeMode.DARK,
+        dynamicColor = AppSettings.settingsState.mode== ThemeMode.SYSTEM
+
+    ) {
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
@@ -109,7 +118,8 @@ fun NewsApp(
                         navController = navController,
                         newsUiViewModel = newsUiViewModel,
                         newsSearchViewModel = newsSearchViewModel,
-                        newsFavViewModel =newsFavViewModel
+                        newsFavViewModel =newsFavViewModel,
+                        settingsViewModel = settingsViewModel
                     )
                 }
             }

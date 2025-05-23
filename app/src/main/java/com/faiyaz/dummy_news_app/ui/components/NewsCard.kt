@@ -67,8 +67,8 @@ fun NewsCard(
             AsyncImage(
                 model = imageUrl, // Replace with actual image resource
                 contentDescription = description,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxWidth()
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.width(350.dp)
                     .height(200.dp)
             )
 

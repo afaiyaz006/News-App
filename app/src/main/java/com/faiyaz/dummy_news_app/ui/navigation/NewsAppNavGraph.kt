@@ -16,6 +16,7 @@ import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchUI
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
 import com.faiyaz.dummy_news_app.ui.Settings.SettingsUI
+import com.faiyaz.dummy_news_app.ui.Settings.SettingsViewModel
 
 
 enum class NewsAppRoute(val route: String) {
@@ -32,7 +33,8 @@ fun NewsAppNavGraph(
     navController: NavHostController,
     newsUiViewModel: NewsUIViewModel,
     newsSearchViewModel: NewsSearchViewModel,
-    newsFavViewModel: FavouriteNewsViewModel
+    newsFavViewModel: FavouriteNewsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     NavHost(navController = navController, startDestination = NewsAppRoute.HOME.route) {
 
@@ -104,7 +106,7 @@ fun NewsAppNavGraph(
             )
         }
         composable(NewsAppRoute.Settings.route){
-            SettingsUI()
+            SettingsUI(settingsViewModel)
         }
     }
 }

@@ -24,9 +24,9 @@ fun CategoryButton(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (selected) Color(0xFFD32F2F) else Color.White
-    val contentColor = if (selected) Color(0xFFF1EDE4) else Color.Gray
-    val borderStroke = if (selected) null else BorderStroke(2.dp, Color(0xFFD32F2F))
+    val backgroundColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
+    val contentColor = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.primary
+    val borderStroke = if (selected) null else BorderStroke(2.dp, MaterialTheme.colorScheme.outline)
 
     Surface(
         shape = RoundedCornerShape(50), // pill shape

@@ -5,38 +5,40 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.faiyaz.dummy_news_app.di.AppContainer
 import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.NewsApp
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
-
-import com.faiyaz.dummy_news_app.ui.theme.NewsAppTheme
+import com.faiyaz.dummy_news_app.ui.Settings.SettingsViewModel
 
 class MainActivity : ComponentActivity() {
+    //view models
     private lateinit var newsUiViewModel: NewsUIViewModel
     private lateinit var newsSearchUiViewModel: NewsSearchViewModel
     private lateinit var favUiViewModel: FavouriteNewsViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //container initialization
         val appContainer = (application as NewsApplication).container
+
+        //attaching view models with repository dependencies
         newsUiViewModel = NewsUIViewModel(appContainer.newsRepository)
         newsSearchUiViewModel = NewsSearchViewModel(appContainer.newsRepository)
         favUiViewModel = FavouriteNewsViewModel(appContainer.newsRepository)
+        settingsViewModel = SettingsViewModel()
+
+
+
+
         enableEdgeToEdge()
         setContent {
             NewsApp(
                 newsUiViewModel=newsUiViewModel,
                 newsSearchViewModel=newsSearchUiViewModel,
-                newsFavViewModel=favUiViewModel
+                newsFavViewModel=favUiViewModel,
+                settingsViewModel=settingsViewModel
             )
 
         }

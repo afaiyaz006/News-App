@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.text.google.fonts)
     val room_version = "2.7.1"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -76,5 +77,9 @@ dependencies {
     //room
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
+
+    //datastore
+    implementation("androidx.datastore:datastore-preferences-core:1.1.7")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 }

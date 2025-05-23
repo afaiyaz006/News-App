@@ -44,7 +44,7 @@ fun NewsHeader(
 
             Text(
                 text = "View All",
-                color = Color.Red,
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -52,7 +52,7 @@ fun NewsHeader(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = "Arrow",
-                tint = Color(0xFF2E7D32) // green
+                tint = MaterialTheme.colorScheme.onPrimary // green
 
             )
         }

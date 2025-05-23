@@ -44,7 +44,7 @@ class NewsApiClient(
     suspend fun getCategoricalNews(topic:String):List<News>?{
         try {
             val endpoint =
-                "https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey"
+                "https://newsapi.org/v2/top-headlines?&category=$topic&apiKey=$apiKey"
             val newsList = getNewsData(endpoint, topic)
             return newsList
         }catch(e: Exception){
@@ -53,7 +53,7 @@ class NewsApiClient(
     }
     suspend fun getTopNews():List<News>?{
         try {
-            val endpoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey"
+            val endpoint = "https://newsapi.org/v2/top-headlines?&apiKey=$apiKey"
             return getNewsData(endpoint)
         }catch(e: Exception){
             return emptyList()
