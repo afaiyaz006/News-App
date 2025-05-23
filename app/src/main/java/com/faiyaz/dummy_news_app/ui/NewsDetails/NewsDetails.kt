@@ -76,40 +76,40 @@ fun NewsDetailUI(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "3 days ago",
-                    color = Color.Gray,
+                    text = selectedNews?.publishedAt.toString().split("T")[0],
+                    color = Color.Black,
                     fontSize = 12.sp
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = "Views",
-                        modifier = Modifier.size(16.dp),
-                        tint = Color.Gray
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "123.1K",
-                        color = Color.Gray,
-                        fontSize = 12.sp
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = "Comments",
-                        modifier = Modifier.size(16.dp),
-                        tint = Color.Gray
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "567K",
-                        color = Color.Gray,
-                        fontSize = 12.sp
-                    )
-                }
+//                Spacer(modifier = Modifier.width(8.dp))
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_launcher_background),
+//                        contentDescription = "Views",
+//                        modifier = Modifier.size(16.dp),
+//                        tint = Color.Gray
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    Text(
+//                        text = "123.1K",
+//                        color = Color.Gray,
+//                        fontSize = 12.sp
+//                    )
+//                }
+//                Spacer(modifier = Modifier.width(8.dp))
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_launcher_background),
+//                        contentDescription = "Comments",
+//                        modifier = Modifier.size(16.dp),
+//                        tint = Color.Gray
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    Text(
+//                        text = "567K",
+//                        color = Color.Gray,
+//                        fontSize = 12.sp
+//                    )
+//                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))

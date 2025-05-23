@@ -110,7 +110,7 @@ fun NewsCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = dateString,
+                        text = dateString.split("T")[0].toString(),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.Gray
                     )

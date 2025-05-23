@@ -30,7 +30,7 @@ class NewsApiClient(
                 description = it.jsonObject["description"]?.jsonPrimitive?.contentOrNull.toString(),
                 url=it.jsonObject["url"]?.jsonPrimitive?.contentOrNull.toString(),
                 imageUrl = it.jsonObject["urlToImage"]?.jsonPrimitive?.contentOrNull.toString(),
-                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull?.toString()?.split("T")[0]?:"",
+                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull.toString(),
                 category= topic.toString().lowercase()
 
             )
