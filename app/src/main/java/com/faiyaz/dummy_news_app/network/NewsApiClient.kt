@@ -11,7 +11,6 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.util.Locale
-
 class NewsApiClient(
     private val httpClient: HttpClient
 ){
@@ -31,7 +30,7 @@ class NewsApiClient(
                 description = it.jsonObject["description"]?.jsonPrimitive?.contentOrNull.toString(),
                 url=it.jsonObject["url"]?.jsonPrimitive?.contentOrNull.toString(),
                 imageUrl = it.jsonObject["urlToImage"]?.jsonPrimitive?.contentOrNull.toString(),
-                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull.toString(),
+                publishedAt = it.jsonObject["publishedAt"]?.jsonPrimitive?.contentOrNull?.toString()?.split("T")[0]?:"",
                 category= topic.toString().lowercase()
 
             )
@@ -64,6 +63,7 @@ class NewsApiClient(
         try {
             val endpoint =
                 "https://newsapi.org/v2/everything?q=$queryString&from=2025-05-01&sortBy=popularity&apiKey=$apiKey"
+
             return getNewsData(endpoint, "searched")
         }catch (e: Exception){
             return emptyList()

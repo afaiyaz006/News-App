@@ -33,17 +33,17 @@ import com.faiyaz.dummy_news_app.data.utils.NewsCategory
 import com.faiyaz.dummy_news_app.ui.NewsApp
 import com.faiyaz.dummy_news_app.ui.NewsDetails.NewsDetailUI
 import com.faiyaz.dummy_news_app.ui.components.CategoryButton
+import com.faiyaz.dummy_news_app.ui.components.CircularLoading
 import com.faiyaz.dummy_news_app.ui.components.NewsTopicSelector
 import com.faiyaz.dummy_news_app.ui.navigation.NewsAppRoute
 
 @Composable
 fun NewsUI(
     newsUiViewModel: NewsUIViewModel,
-//    navController: NavController
     onNewsCardTap: ()->Unit={},
     onViewAllClick: ()->Unit={},
     onFeaturedNewsClick:()->Unit={},
-    onLikeButtonClicked:(News)->Unit={}
+    onLikeButtonClicked:(News)->Unit={},
 ) {
     val newsViewState by newsUiViewModel.uiState.collectAsStateWithLifecycle()
     val topNews = newsViewState.topNews
@@ -81,7 +81,8 @@ fun NewsUI(
                 newsUiViewModel.selectNews(news)
                 onNewsCardTap()
             },
-            onLikeButtonClicked=onLikeButtonClicked
+            onLikeButtonClicked=onLikeButtonClicked,
+            isLoading=newsViewState.isLoading
         )
 
         NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)
@@ -91,7 +92,8 @@ fun NewsUI(
                 newsUiViewModel.selectNews(news)
                 onNewsCardTap()
             },
-            onLikeButtonClicked=onLikeButtonClicked
+            onLikeButtonClicked=onLikeButtonClicked,
+            isLoading = newsViewState.isLoading
         )
     }
 }
@@ -99,36 +101,46 @@ fun NewsUI(
 @Composable
 fun NewsGallery(categoryNews: List<News>, 
                 onNewsCardTap: (News) -> Unit,
-                onLikeButtonClicked: (News) -> Unit) {
-    LazyRow {
-        items(categoryNews) { news ->
-            NewsCard(
-                title = news.title,
-                description = news.description,
-                imageUrl = news.imageUrl,
-                dateString = news.publishedAt,
-                isLiked = news.liked,
-                onNewsCardTap = { onNewsCardTap(news) },
-                onLikeButtonTap ={ onLikeButtonClicked(news)}
-            )
+                onLikeButtonClicked: (News) -> Unit,
+                isLoading: Boolean=false) {
+    if(isLoading){
+        CircularLoading()
+    }else {
+        LazyRow {
+            items(categoryNews) { news ->
+                NewsCard(
+                    title = news.title,
+                    description = news.description,
+                    imageUrl = news.imageUrl,
+                    dateString = news.publishedAt,
+                    isLiked = news.liked,
+                    onNewsCardTap = { onNewsCardTap(news) },
+                    onLikeButtonTap = { onLikeButtonClicked(news) }
+                )
+            }
         }
     }
 }
 @Composable
 fun NewsGalleryFeatured(topNews:List<News>,
                         onNewsCardTap: (News) -> Unit,
-                        onLikeButtonClicked:(News)->Unit){
-    LazyRow(modifier=Modifier.fillMaxHeight()) {
-        items(topNews){
-            news -> NewsCard(
-                title = news.title,
-                description = news.description,
-                imageUrl = news.imageUrl,
-                dateString = news.publishedAt,
-                isLiked = news.liked,
-                onNewsCardTap = { onNewsCardTap(news)},
-                onLikeButtonTap = {onLikeButtonClicked(news)}
-            )
+                        onLikeButtonClicked:(News)->Unit,
+                        isLoading: Boolean=false){
+    if(isLoading){
+        CircularLoading()
+    }else {
+        LazyRow(modifier = Modifier.fillMaxHeight()) {
+            items(topNews) { news ->
+                NewsCard(
+                    title = news.title,
+                    description = news.description,
+                    imageUrl = news.imageUrl,
+                    dateString = news.publishedAt,
+                    isLiked = news.liked,
+                    onNewsCardTap = { onNewsCardTap(news) },
+                    onLikeButtonTap = { onLikeButtonClicked(news) }
+                )
+            }
         }
     }
 }

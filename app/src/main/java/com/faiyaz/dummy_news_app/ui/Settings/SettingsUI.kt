@@ -37,7 +37,7 @@ fun SettingsUI(
             BackGroundThemeOption(
                 defaultOption = AppSettings.settingsState.mode.toString(),
                 onAppBackgroundChange = {
-                    mode -> AppSettings.setThemeMode(mode)
+                    mode -> settingsViewModel.setThemeMode(mode)
                 }
             )
         }

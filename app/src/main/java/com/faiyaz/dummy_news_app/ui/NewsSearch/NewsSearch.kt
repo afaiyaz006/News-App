@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.faiyaz.dummy_news_app.data.News
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsGallery
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsGalleryFeatured
+import com.faiyaz.dummy_news_app.ui.components.CircularLoading
 import com.faiyaz.dummy_news_app.ui.components.NewsCard
 import com.faiyaz.dummy_news_app.ui.components.NewsHeader
 import com.faiyaz.dummy_news_app.ui.components.NewsTopicSelector
@@ -28,20 +29,27 @@ fun NewsSearchUI(
     onLikeButtonClicked: (News)->Unit={}
 ){
     var searchQuery by rememberSaveable { mutableStateOf("") }
+    var isLoading by rememberSaveable { mutableStateOf(false) }
     val newsSearchUIState by newsSearchViewModel.uiState.collectAsStateWithLifecycle()
     Column(modifier = Modifier.fillMaxHeight()){
         SearchBar(
             query = searchQuery,
             onSearch = {
+                isLoading=true
                 newsSearchViewModel.searchNews(searchQuery)
-            } ,
+                isLoading=false
+                       } ,
             onQueryChange = { newQuery -> searchQuery=newQuery}
         )
-        NewsList(
-            newsSearchUIState.newsList,
-            onItemTapped=onSearchItemTapped,
-            onLikeButtonClicked=onLikeButtonClicked
-        )
+        if(isLoading){
+            CircularLoading()
+        }else {
+            NewsList(
+                newsSearchUIState.newsList,
+                onItemTapped = onSearchItemTapped,
+                onLikeButtonClicked = onLikeButtonClicked
+            )
+        }
 
     }
 }

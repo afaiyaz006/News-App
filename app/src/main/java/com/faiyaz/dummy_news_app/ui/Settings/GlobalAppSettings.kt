@@ -28,15 +28,15 @@ object AppSettings {
     val settingsState: SettingsUIState
         get() = _settingsState
 
-    fun setThemeMode(mode: ThemeMode) {
+    suspend fun setThemeMode(mode: ThemeMode) {
         _settingsState = _settingsState.copy(mode = mode)
     }
 
-    fun setAppThemeColor(color: AppThemeColor) {
+    suspend fun setAppThemeColor(color: AppThemeColor) {
         _settingsState = _settingsState.copy(appThemeColor = color)
     }
 
-    fun setLanguage(language: Languages){
+    suspend fun setLanguage(language: Languages){
         _settingsState = _settingsState.copy(appLanguage = language)
     }
 }
