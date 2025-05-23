@@ -26,5 +26,5 @@ This is a simple news application that allows users to browse and read news arti
 Get api key from newsapi.org and place it on the local.properties file
 NEWS_API_KEY=API_KEY
 ## Screenshots
-[!ss1](https://i.ibb.co/W4BLJtNf/Ss-app.png")
+[!ss1](https://i.ibb.co/W4BLJtNf/Ss-app.png)
 
