@@ -5,11 +5,13 @@ plugins {
     id("com.google.devtools.ksp") version "2.0.21-1.0.27" //needed for room to work
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20" //serializer
 }
-
+val newsApiKey: String = project.findProperty("NEWS_API_KEY") as String? ?: ""
 android {
     namespace = "com.faiyaz.dummy_news_app"
     compileSdk = 35
-
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.faiyaz.dummy_news_app"
         minSdk = 24
@@ -27,6 +29,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug") {
+            buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
+        }
+        getByName("release") {
+            buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
         }
     }
     compileOptions {

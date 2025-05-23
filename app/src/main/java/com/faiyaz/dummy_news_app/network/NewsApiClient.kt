@@ -1,6 +1,7 @@
 package com.faiyaz.dummy_news_app.network
 
 import android.util.Log
+import com.faiyaz.dummy_news_app.BuildConfig
 import com.faiyaz.dummy_news_app.data.News
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -14,7 +15,7 @@ import java.util.Locale
 class NewsApiClient(
     private val httpClient: HttpClient
 ){
-    private val apiKey =""
+    private val apiKey = BuildConfig.NEWS_API_KEY
     suspend fun getNewsData(endpoint:String,topic:String="top"):List<News>?{
         var response = httpClient.get(endpoint)
         var responseString = response.bodyAsText()
