@@ -1,6 +1,7 @@
 package com.faiyaz.dummy_news_app.ui.Favourites
 
 import NewsUiState
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.faiyaz.dummy_news_app.data.News
@@ -42,10 +43,16 @@ class FavouriteNewsViewModel(
     fun togglelikeNews(news:News){
         try {
             viewModelScope.launch {
-                println(news.title.toString()+" IS LIKED")
+
                 when(news.liked){
-                    true -> newsRepository.likeNews(news)
-                    else -> newsRepository.unLikeNews(news)
+                    true ->{
+                        println(news.uuid+"-"+news.title.toString()+" IS UNLIKED")
+                        newsRepository.unLikeNews(news)
+                    }
+                    else ->{
+                        println(news.uuid+"-"+news.title.toString()+" IS LIKED")
+                        newsRepository.likeNews(news)
+                    }
                 }
                 val likedNews = newsRepository.getLikedNews()
                 _uiState.update {
@@ -55,7 +62,7 @@ class FavouriteNewsViewModel(
                 }
             }
         }catch(e: Exception){
-
+            Log.d("Error",e.message.toString())
         }
     }
     fun getFavouriteNews():List<News>?{

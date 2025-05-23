@@ -81,9 +81,7 @@ fun NewsUI(
                 newsUiViewModel.selectNews(news)
                 onNewsCardTap()
             },
-            onLikeButtonClicked={
-                news->onLikeButtonClicked(news)
-            }
+            onLikeButtonClicked=onLikeButtonClicked
         )
 
         NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)

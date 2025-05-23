@@ -27,10 +27,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import com.faiyaz.dummy_news_app.R
+import com.faiyaz.dummy_news_app.data.News
+
 @Composable
 fun NewsCard(
     title: String ="demo",
@@ -41,6 +47,10 @@ fun NewsCard(
     onLikeButtonTap:()->Unit={},
     isLiked:Boolean=false
 ) {
+
+    var isLiked by remember { mutableStateOf(isLiked) }
+
+
     val likeColor = when(isLiked){
         false -> Color.Gray
         true -> Color.Red
@@ -105,7 +115,17 @@ fun NewsCard(
                         color = Color.Gray
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Star, contentDescription = null, tint =likeColor, modifier = Modifier.size(32.dp).clickable(onClick = onLikeButtonTap))
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = null,
+                            tint =likeColor,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable(onClick ={
+                                    isLiked=!isLiked
+                                    onLikeButtonTap()
+                                })
+                        )
                         Spacer(modifier = Modifier.width(4.dp))
 //                        Text("123.1K", style = MaterialTheme.typography.labelSmall)
 //
