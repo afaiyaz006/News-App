@@ -17,12 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.faiyaz.dummy_news_app.R
 
 @Composable
 fun NewsHeader(
-    headerName:String = "Popular News",
+    headerName:String = stringResource(R.string.popular_news),
     onViewAllClick:()->Unit={}
 ) {
     Row(
@@ -44,7 +46,7 @@ fun NewsHeader(
 
             Text(
                 text = "View All",
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.outline,
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -52,7 +54,7 @@ fun NewsHeader(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = "Arrow",
-                tint = MaterialTheme.colorScheme.onPrimary // green
+                tint = MaterialTheme.colorScheme.onTertiary
 
             )
         }

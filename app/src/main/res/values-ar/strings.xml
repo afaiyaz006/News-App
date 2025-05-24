@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تطبيق الأخبار</string>
+    <string name="featured">مميز</string>
+    <string name="popular_news">الأخبار الشائعة</string>
+    <string name="app_language">لغة التطبيق</string>
+    <string name="app_background">خلفية التطبيق</string>
+    <string name="business">أعمال</string>
+    <string name="entertainment">ترفيه</string>
+    <string name="general">عام</string>
+    <string name="health">صحة</string>
+    <string name="science">علم</string>
+    <string name="sports">رياضة</string>
+    <string name="technology">تكنولوجيا</string>
+</resources>

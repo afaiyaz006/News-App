@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
@@ -170,7 +171,7 @@ fun BottomNavigation(
                     onClick = onFavouriteButtonPressed
                 ) {
                     Icon(
-                        Icons.Outlined.Favorite,
+                        Icons.Outlined.Star,
                         contentDescription = "Localized description",
                         modifier = Modifier.size(32.dp),
                     )

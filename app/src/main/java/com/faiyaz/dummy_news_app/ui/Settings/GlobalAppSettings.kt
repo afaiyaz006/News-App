@@ -15,7 +15,8 @@ enum class AppThemeColor {
 }
 enum class Languages{
     en,
-    bn
+    bn,
+    ar,
 
 }
 data class SettingsUIState(
@@ -29,7 +30,7 @@ object AppSettings {
     val settingsState: SettingsUIState
         get() = _settingsState
 
-    suspend fun setThemeMode(mode: ThemeMode) {
+    fun setThemeMode(mode: ThemeMode) {
         _settingsState = _settingsState.copy(mode = mode)
     }
     fun setLocale(languages: Languages){

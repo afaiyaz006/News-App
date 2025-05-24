@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">খবর অ্যাপ</string>
+    <string name="app_name">সংবাদ অ্যাপ</string>
+    <string name="featured">ফিচার্ড</string>
+    <string name="popular_news">জনপ্রিয় সংবাদ</string>
+    <string name="app_language">অ্যাপের ভাষা</string>
+    <string name="app_background">অ্যাপের পটভূমি</string>
+    <string name="business">ব্যবসা</string>
+    <string name="entertainment">বিনোদন</string>
+    <string name="general">সাধারণ</string>
+    <string name="health">স্বাস্থ্য</string>
+    <string name="science">বিজ্ঞান</string>
+    <string name="sports">খেলাধুলা</string>
+    <string name="technology">প্রযুক্তি</string>
 </resources>

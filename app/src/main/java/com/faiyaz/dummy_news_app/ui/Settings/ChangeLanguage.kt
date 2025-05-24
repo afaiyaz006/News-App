@@ -16,7 +16,7 @@ fun setAppLocale(context: Context, languageCode: String) {
     // Update locale based on Android version
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         config.setLocale(locale)
-        // For Android 13+ (API 33+), you can set per-app language
+        // For Android 13+ (API 33+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(Context.LOCALE_SERVICE)?.let {
                 (it as android.app.LocaleManager).applicationLocales =

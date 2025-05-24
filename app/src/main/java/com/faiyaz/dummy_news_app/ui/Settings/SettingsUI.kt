@@ -12,10 +12,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java.util.Locale
+import com.faiyaz.dummy_news_app.R
 
 @Composable
 fun SettingsUI(
@@ -99,7 +101,7 @@ fun BackGroundThemeOption(
             .fillMaxWidth()
     ) {
         Text(
-            text = "App background?",
+            text = stringResource(R.string.app_background),
             modifier = Modifier.padding(16.dp)
         )
         ThemeMode.entries.forEach { mode ->
@@ -130,7 +132,7 @@ fun LanguageOptionSelector(
     ) {
         Column {
             Text(
-                text = "App Language",
+                text =stringResource(R.string.app_language),
                 modifier = Modifier.padding(16.dp)
             )
 

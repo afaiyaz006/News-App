@@ -26,9 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.faiyaz.dummy_news_app.R
 import com.faiyaz.dummy_news_app.data.utils.NewsCategory
 import com.faiyaz.dummy_news_app.ui.NewsApp
 import com.faiyaz.dummy_news_app.ui.NewsDetails.NewsDetailUI
@@ -58,15 +60,26 @@ fun NewsUI(
     ) {
         NewsHeader(onViewAllClick=onViewAllClick)
 
-        val categories = NewsCategory.getAllValues()
-
+        var categories = NewsCategory.getAllValues()
+        var categoriesLocal: @Composable (String)->String ={ category ->
+           when (category) {
+                "business" -> stringResource(R.string.business)
+                "entertainment" -> stringResource(R.string.entertainment)
+                "general" -> stringResource(R.string.general)
+                "health" -> stringResource(R.string.health)
+                "science" -> stringResource(R.string.science)
+                "sports" -> stringResource(R.string.sports)
+                "technology" -> stringResource(R.string.technology)
+                else -> category
+            }.toString()
+        }
         LazyRow(
             modifier = Modifier.padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(categories) { category ->
                 CategoryButton(
-                    text = category.toString(),
+                    text = categoriesLocal(category),
                     selected = newsViewState.selectedCategory == category.toString(),
                     onClick = {
                         newsUiViewModel.updateCategory(category.toString())
@@ -85,7 +98,7 @@ fun NewsUI(
             isLoading=newsViewState.isLoading
         )
 
-        NewsHeader(headerName = "Featured",onViewAllClick=onFeaturedNewsClick)
+        NewsHeader(headerName = stringResource(R.string.featured),onViewAllClick=onFeaturedNewsClick)
         NewsGalleryFeatured(
             topNews,
             onNewsCardTap={ news ->
