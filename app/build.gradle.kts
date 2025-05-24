@@ -51,6 +51,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.compiler)
     val room_version = "2.7.1"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -67,6 +68,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("com.google.guava:guava:31.1-jre")
 
     //ktor
     implementation(platform("io.ktor:ktor-bom:3.1.3"))
@@ -89,5 +91,9 @@ dependencies {
     //datastore
     implementation("androidx.datastore:datastore-preferences-core:1.1.7")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //App compat delegate
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.appcompat:appcompat-resources:1.7.0")
 
 }

@@ -1,5 +1,7 @@
 package com.faiyaz.dummy_news_app.ui.Settings
 
+import java.util.Locale
+
 enum class ThemeMode {
     SYSTEM,
     DARK,
@@ -12,15 +14,14 @@ enum class AppThemeColor {
     BLUE
 }
 enum class Languages{
-    English,
-    French,
-    Russia
+    en,
+    bn
 
 }
 data class SettingsUIState(
     val mode: ThemeMode = ThemeMode.SYSTEM,
     val appThemeColor: AppThemeColor = AppThemeColor.BLUE,
-    val appLanguage: Languages = Languages.English
+    val appLanguage: Languages = Languages.en
 )
 object AppSettings {
     private var _settingsState = SettingsUIState()
@@ -31,12 +32,11 @@ object AppSettings {
     suspend fun setThemeMode(mode: ThemeMode) {
         _settingsState = _settingsState.copy(mode = mode)
     }
-
-    suspend fun setAppThemeColor(color: AppThemeColor) {
-        _settingsState = _settingsState.copy(appThemeColor = color)
+    fun setLocale(languages: Languages){
+        _settingsState = _settingsState.copy(appLanguage = languages)
+    }
+    fun getLocale():String{
+        return _settingsState.appLanguage.toString()
     }
 
-    suspend fun setLanguage(language: Languages){
-        _settingsState = _settingsState.copy(appLanguage = language)
-    }
 }

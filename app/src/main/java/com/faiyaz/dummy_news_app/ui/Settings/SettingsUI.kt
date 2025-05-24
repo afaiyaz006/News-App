@@ -9,17 +9,19 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import java.util.Locale
 
 @Composable
 fun SettingsUI(
     settingsViewModel: SettingsViewModel
 ) {
-
+    var currentLanguage by rememberSaveable {mutableStateOf(settingsViewModel.currentLanguage)}
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -41,6 +43,16 @@ fun SettingsUI(
                 }
             )
         }
+        item {
+            LanguageOptionSelector(
+                defaultLanguage = currentLanguage,
+                onLanguageChange = { language ->
+                    currentLanguage = language
+                    settingsViewModel.setLanguage(language)
+                }
+            )
+        }
+
 //        item {
 //            BackGroundColorPicker(
 //                defaultOption = AppSettings.settingsState.appThemeColor.toString(),
@@ -51,6 +63,28 @@ fun SettingsUI(
 //        }
     }
 }
+@Composable
+fun CheckBoxOption(
+    title: String = "Option",
+    isSelected: Boolean = false,
+    onOptionSelected: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = isSelected,
+            onCheckedChange = { onOptionSelected() }
+        )
+        Text(
+            text = title,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
 
 @Composable
 fun BackGroundThemeOption(
@@ -59,7 +93,6 @@ fun BackGroundThemeOption(
 ) {
     // State to hold the currently selected theme option
     var selectedThemeOption by remember { mutableStateOf(defaultOption) } // Default selected option
-
     Card(
         modifier = Modifier
             .padding(bottom = 16.dp)
@@ -83,63 +116,73 @@ fun BackGroundThemeOption(
 
     }
 }
-
 @Composable
-fun BackGroundColorPicker(
-    defaultOption: String ="Red",
-    onAppThemeChanged:(AppThemeColor)->Unit ={}
+fun LanguageOptionSelector(
+    defaultLanguage: Languages = Languages.en,
+    onLanguageChange: (Languages) -> Unit = {}
 ) {
-    // State to hold the currently selected color option
-    var selectedColorOption by remember { mutableStateOf(defaultOption) } // Default selected option
+    var selectedLanguage by remember { mutableStateOf(defaultLanguage) }
 
     Card(
         modifier = Modifier
             .padding(bottom = 16.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = "App Theme",
-            modifier = Modifier.padding(16.dp)
-        )
+        Column {
+            Text(
+                text = "App Language",
+                modifier = Modifier.padding(16.dp)
+            )
 
-        AppThemeColor.entries.forEach {
-            colorTheme ->
-            CheckBoxOption(
-                    title = colorTheme.name.toString(),
-                    isSelected = selectedColorOption==colorTheme.name.toString(),
+            Languages.entries.forEach { language ->
+                CheckBoxOption(
+                    title = language.name,
+                    isSelected = selectedLanguage == language,
                     onOptionSelected = {
-                        selectedColorOption = colorTheme.name.toString()
-                        onAppThemeChanged(colorTheme)
+                        selectedLanguage = language
+                        onLanguageChange(language)
                     }
                 )
+            }
         }
-
-
     }
 }
 
-@Composable
-fun CheckBoxOption(
-    title: String = "Option",
-    isSelected: Boolean = false,
-    onOptionSelected: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = isSelected,
-            onCheckedChange = { onOptionSelected() }
-        )
-        Text(
-            text = title,
-            modifier = Modifier.padding(start = 8.dp)
-        )
-    }
-}
+
+//@Composable
+//fun BackGroundColorPicker(
+//    defaultOption: String ="Red",
+//    onAppThemeChanged:(AppThemeColor)->Unit ={}
+//) {
+//    // State to hold the currently selected color option
+//    var selectedColorOption by remember { mutableStateOf(defaultOption) } // Default selected option
+//
+//    Card(
+//        modifier = Modifier
+//            .padding(bottom = 16.dp)
+//            .fillMaxWidth()
+//    ) {
+//        Text(
+//            text = "App Theme",
+//            modifier = Modifier.padding(16.dp)
+//        )
+//
+//        AppThemeColor.entries.forEach {
+//            colorTheme ->
+//            CheckBoxOption(
+//                    title = colorTheme.name.toString(),
+//                    isSelected = selectedColorOption==colorTheme.name.toString(),
+//                    onOptionSelected = {
+//                        selectedColorOption = colorTheme.name.toString()
+//                        onAppThemeChanged(colorTheme)
+//                    }
+//                )
+//        }
+//
+//
+//    }
+//}
+
 
 //@Preview(showBackground = true)
 //@Composable

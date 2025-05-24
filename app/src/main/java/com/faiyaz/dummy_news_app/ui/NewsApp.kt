@@ -32,11 +32,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.faiyaz.dummy_news_app.R
 import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.NewsUI.NewsUI
@@ -208,7 +210,7 @@ fun TopNavigation(
 ){
     CenterAlignedTopAppBar(
         title = {
-            Text("Dummy News App", maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.app_name), maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
 
         navigationIcon = {
@@ -228,14 +230,14 @@ fun TopNavigation(
                 }
             }
         },
-        actions = {
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Notifications,
-                    contentDescription = "Localized description"
-                )
-            }
-        }
+//        actions = {
+//            IconButton(onClick = { /* doSomething() */ }) {
+//                Icon(
+//                    imageVector = Icons.Filled.Notifications,
+//                    contentDescription = "Localized description"
+//                )
+//            }
+//        }
     )
 
 }

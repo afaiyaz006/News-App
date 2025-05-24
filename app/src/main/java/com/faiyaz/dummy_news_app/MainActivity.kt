@@ -1,6 +1,7 @@
 package com.faiyaz.dummy_news_app
 
 import NewsUIViewModel
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +10,8 @@ import com.faiyaz.dummy_news_app.ui.Favourites.FavouriteNewsViewModel
 import com.faiyaz.dummy_news_app.ui.NewsApp
 import com.faiyaz.dummy_news_app.ui.NewsSearch.NewsSearchViewModel
 import com.faiyaz.dummy_news_app.ui.Settings.SettingsViewModel
+
+
 
 class MainActivity : ComponentActivity() {
     //view models
@@ -27,9 +30,7 @@ class MainActivity : ComponentActivity() {
         newsUiViewModel = NewsUIViewModel(appContainer.newsRepository)
         newsSearchUiViewModel = NewsSearchViewModel(appContainer.newsRepository)
         favUiViewModel = FavouriteNewsViewModel(appContainer.newsRepository)
-        settingsViewModel = SettingsViewModel()
-
-
+        settingsViewModel = SettingsViewModel(appContainer)
 
 
         enableEdgeToEdge()
